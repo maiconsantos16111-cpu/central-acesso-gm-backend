@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: central-acesso-gm-maestro
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: ""
+    startCommand: node server.js
+    envVars:
+      - key: MAESTRO_BASE
+        sync: false
+      - key: MAESTRO_API_KEY
+        sync: false
+      - key: MAESTRO_REQUEST_ORIGIN
+        sync: false
+      - key: BACKEND_TOKEN
+        sync: false
