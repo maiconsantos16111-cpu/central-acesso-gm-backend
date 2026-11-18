@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self' https:; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#EC1C24">
+  <meta name="description" content="Central de Acesso GM ARMAZEM MATEUS — recuperação de GM ID e redefinição de senha do Maestro Grupo Mateus.">
+  <title>ARMAZEM MATEUS · Central de Acesso GM</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230A0A0C'/%3E%3Cpath d='M32 54C20 44 15 35 15 28c0-8 6-13 12-13 4 0 7 3 9 7 2-4 5-7 9-7 6 0 12 5 12 13 0 7-5 16-17 26Z' fill='none' stroke='%23EC1C24' stroke-width='6' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/styles.css?v=3">
+  <link rel="stylesheet" href="assets/android.css">
+</head>
+<body data-paper="80mm">
+
+  <a class="skip-link" href="#main">Ir para o conteúdo</a>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#" data-action="home" aria-label="ARMAZEM MATEUS — Central de Acesso GM, início">
+        <span class="brand-heart" aria-hidden="true">
+          <svg viewBox="0 0 100 92" focusable="false">
+            <defs>
+              <linearGradient id="brandHeartGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#ff4b42"/>
+                <stop offset=".55" stop-color="#EC1C24"/>
+                <stop offset="1" stop-color="#8E0D13"/>
+              </linearGradient>
+            </defs>
+            <path d="M50 84C22 64 9 47 9 31.5 9 17.5 19.5 8 31 8c9.5 0 15.5 6 19 14.5C53.5 14 59.5 8 69 8c11.5 0 22 9.5 22 23.5C91 47 78 64 50 84Z"
+                  fill="none" stroke="url(#brandHeartGrad)" stroke-width="13" stroke-linejoin="round" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="brand-text">
+          <strong class="brand-3d" data-marca-3d>ARMAZEM MATEUS</strong>
+          <small>Central de Acesso GM · <span data-unidade>CD-336</span></small>
+        </span>
+      </a>
+
+      <div class="topbar-actions">
+        <button type="button" class="btn btn-ghost btn-sm" data-action="open-admin" aria-haspopup="dialog" aria-label="Painel de gestão">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.2a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.2a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3h.1a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.2a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8v.1a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.2a1.6 1.6 0 0 0-1.5 1z"/></svg>
+          <span class="hide-sm">Gestão</span>
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" data-action="end">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3v9"/><path d="M6.5 6.5a8 8 0 1 0 11 0"/></svg>
+          <span class="hide-sm">Encerrar</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="sim-banner" id="sim-banner" hidden></div>
+
+  <main id="main">
+
+    <!-- ==================== INÍCIO ==================== -->
+    <section id="view-home" class="view" aria-labelledby="home-title">
+      <div class="home-head">
+        <p class="eyebrow">Atendimento de acesso · <span data-marca>ARMAZEM MATEUS</span></p>
+        <h1 id="home-title" tabindex="-1">Seu GM ID e sua senha, resolvidos em um só lugar.</h1>
+        <p class="lead">
+          Escolha o procedimento. O vínculo e o CPF são solicitados no início do atendimento e o
+          comprovante sai com o login e a nova senha — em papel comum ou bobina térmica.
+        </p>
+
+        <ol class="home-flow" aria-label="Como funciona o atendimento">
+          <li>
+            <span class="hf-num" aria-hidden="true">1</span>
+            <span class="hf-text">
+              <strong>Escolha o procedimento</strong>
+              <span>Senha aleatória, lembrar GM ID ou escolher a senha.</span>
+            </span>
+          </li>
+          <li>
+            <span class="hf-num" aria-hidden="true">2</span>
+            <span class="hf-text">
+              <strong>Informe o vínculo e o CPF</strong>
+              <span>Os demais dados são pedidos na hora da redefinição.</span>
+            </span>
+          </li>
+          <li>
+            <span class="hf-num" aria-hidden="true">3</span>
+            <span class="hf-text">
+              <strong>Imprima o comprovante</strong>
+              <span>Só com o acesso — sem nome, CPF ou data.</span>
+            </span>
+          </li>
+        </ol>
+      </div>
+
+      <div class="options-block">
+        <div class="options-head">
+          <h2>O que você precisa?</h2>
+          <p id="options-hint">Escolha um dos três procedimentos para começar.</p>
+        </div>
+
+        <div class="options" id="options">
+          <button type="button" class="option" data-option="senha-aleatoria">
+            <span class="option-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false"><path d="M12 3v3M12 18v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M3 12h3M18 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/><circle cx="12" cy="12" r="3.4"/></svg>
+            </span>
+            <span class="option-title">Gerar senha aleatória</span>
+            <span class="option-desc">O sistema cria uma senha forte e redefine o acesso do colaborador.</span>
+            <span class="option-tag">GM ID + nova senha</span>
+          </button>
+
+          <button type="button" class="option" data-option="lembrar-gm">
+            <span class="option-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/><path d="M11 8v3l2 1.5"/></svg>
+            </span>
+            <span class="option-title">Lembrar GM ID</span>
+            <span class="option-desc">Consulta o login do colaborador. Não altera a senha em nenhuma hipótese.</span>
+            <span class="option-tag">Somente GM ID</span>
+          </button>
+
+          <button type="button" class="option" data-option="escolher-senha">
+            <span class="option-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false"><rect x="4" y="10" width="16" height="10" rx="2.5"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/><path d="M12 14v2.5"/></svg>
+            </span>
+            <span class="option-title">Escolher minha senha</span>
+            <span class="option-desc">O colaborador define a nova senha e o sistema aplica no Maestro.</span>
+            <span class="option-tag">GM ID + senha escolhida</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ATENDIMENTO ==================== -->
+    <section id="view-service" class="view" aria-labelledby="service-title" hidden>
+      <button type="button" class="link-back" data-action="back-home">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        Início
+      </button>
+
+      <div class="service-head">
+        <span class="service-icon" id="service-icon" aria-hidden="true"></span>
+        <div>
+          <p class="eyebrow" id="service-eyebrow">Procedimento</p>
+          <h1 id="service-title" tabindex="-1">—</h1>
+          <p class="lead" id="service-desc">—</p>
+        </div>
+      </div>
+
+      <div class="service-grid">
+        <div class="card service-card">
+          <form id="service-form" novalidate autocomplete="off">
+            <div id="service-fields"></div>
+
+            <p class="form-error" id="service-error" role="alert" hidden></p>
+
+            <div class="actions">
+              <button type="button" class="btn btn-ghost" data-action="back-home">Voltar</button>
+              <button type="submit" class="btn btn-primary btn-lg" id="btn-run">
+                <span id="btn-run-label">Iniciar procedimento</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+
+            <p class="micro-note" id="service-note"></p>
+          </form>
+
+          <div class="progress-box" id="service-progress" hidden aria-live="polite">
+            <span class="spinner" aria-hidden="true"></span>
+            <div>
+              <p class="progress-title">Executando no Maestro…</p>
+              <p class="progress-label" id="progress-label">Preparando…</p>
+              <p class="progress-sub">Não feche esta janela. A operação será confirmada pelo site oficial.</p>
+            </div>
+          </div>
+
+          <div class="result" id="service-result" hidden>
+            <div class="result-head">
+              <span class="result-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false"><path d="m5 12.5 4.5 4.5L19 7"/></svg>
+              </span>
+              <div>
+                <h2 id="result-title">Procedimento concluído</h2>
+                <p id="result-sub"></p>
+              </div>
+            </div>
+
+            <dl class="result-rows">
+              <div class="result-row">
+                <dt>GM / LOGIN</dt>
+                <dd>
+                  <span id="result-gm"></span>
+                  <button type="button" class="btn-mini" data-action="copy-gm" title="Copiar GM ID">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M15 5H6a1 1 0 0 0-1 1v9"/></svg>
+                    Copiar
+                  </button>
+                </dd>
+              </div>
+
+              <div class="result-row" id="result-pass-row">
+                <dt>NOVA SENHA</dt>
+                <dd>
+                  <span id="result-pass"></span>
+                  <button type="button" class="btn-mini" data-action="reveal-pass" id="btn-reveal-pass">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.6"/></svg>
+                    <span id="reveal-label">Mostrar</span>
+                  </button>
+                </dd>
+              </div>
+
+              <div class="result-row">
+                <dt>PROTOCOLO</dt>
+                <dd id="result-protocol"></dd>
+              </div>
+            </dl>
+
+            <div class="actions actions-print">
+              <button type="button" class="btn btn-ghost" data-action="new-operation">Nova operação</button>
+              <button type="button" class="btn btn-print btn-lg" data-action="print" id="btn-print">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 8V3h10v5"/><rect x="4" y="8" width="16" height="8" rx="2"/><path d="M7 16h10v5H7z"/></svg>
+                IMPRIMIR
+              </button>
+            </div>
+
+            <p class="micro-note" id="result-note"></p>
+          </div>
+        </div>
+
+        <aside class="card steps-card" aria-labelledby="steps-title">
+          <h2 id="steps-title">Etapas do procedimento</h2>
+          <ol class="timeline" id="timeline"></ol>
+          <div class="callout" id="service-callout" hidden></div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p><strong class="footer-brand" data-marca>ARMAZEM MATEUS</strong> · <span data-unidade>CD-336</span> · <span data-assinatura>Suporte T.I</span></p>
+      <p class="footer-links">
+        <span id="footer-mode">Ambiente de simulação</span>
+        <a href="https://maestro.grupomateus.com.br/login" target="_self" rel="noopener noreferrer">Abrir site do Maestro</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- ==================== DESCANSO DE TELA ==================== -->
+  <div class="screensaver" id="screensaver" hidden>
+    <div class="ss-bg" aria-hidden="true">
+      <span class="ss-bg-base"></span>
+      <span class="ss-bg-panel"></span>
+      <span class="ss-bg-stripes"></span>
+      <span class="ss-bg-dots"></span>
+      <span class="ss-bg-floor"></span>
+      <span class="ss-beam"></span>
+    </div>
+
+    <button type="button" class="ss-hit" id="ss-wake" aria-label="Toque na tela para iniciar o atendimento">
+      <span class="ss-stage">
+        <span class="ss-mark">
+          <svg class="ss-heart" viewBox="0 0 100 92" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="ssHeartGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop class="ss-stop-a" offset="0" stop-color="#ff3b33"/>
+                <stop class="ss-stop-b" offset=".55" stop-color="#EC1C24"/>
+                <stop class="ss-stop-c" offset="1" stop-color="#8E0D13"/>
+              </linearGradient>
+            </defs>
+            <path class="ss-heart-path" d="M50 84C22 64 9 47 9 31.5 9 17.5 19.5 8 31 8c9.5 0 15.5 6 19 14.5C53.5 14 59.5 8 69 8c11.5 0 22 9.5 22 23.5C91 47 78 64 50 84Z"/>
+          </svg>
+        </span>
+
+        <span class="ss-word" data-marca-3d>ARMAZEM MATEUS</span>
+        <span class="ss-code" data-unidade>CD-336</span>
+
+        <span class="ss-sig">
+          <span class="ss-sig-text" data-assinatura>Suporte T.I</span>
+          <svg class="ss-swoosh" viewBox="0 0 360 44" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <path d="M6 32C70 10 150 5 214 13c46 6 92 14 140 6"/>
+          </svg>
+        </span>
+
+        <span class="ss-cta" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false"><path d="M9 12V6.5a1.5 1.5 0 0 1 3 0V11"/><path d="M12 11V5a1.5 1.5 0 0 1 3 0v6"/><path d="M15 11V7a1.5 1.5 0 0 1 3 0v6a7 7 0 0 1-7 7h-.6a6 6 0 0 1-5-2.7L3.8 15a1.6 1.6 0 0 1 2.6-1.8L9 16.5"/></svg>
+        </span>
+
+        <span class="ss-cta-text">Toque na tela para iniciar</span>
+        <span class="ss-hint">Toque em qualquer lugar ou pressione uma tecla</span>
+      </span>
+    </button>
+
+    <div class="ss-marquee" aria-hidden="true">
+      <div class="ss-track">
+        <span class="ss-group">
+          <span class="ss-item">Toque aqui</span>
+          <span class="ss-dot"></span>
+          <span class="ss-marquee-brand" data-marca>ARMAZEM MATEUS</span>
+          <span class="ss-dot"></span>
+          <span class="ss-item soft">Inicie o atendimento</span>
+          <span class="ss-dot"></span>
+          <span class="ss-item">Toque aqui</span>
+          <span class="ss-dot"></span>
+          <span class="ss-marquee-brand" data-marca>ARMAZEM MATEUS</span>
+          <span class="ss-dot"></span>
+          <span class="ss-item soft">GM ID e senha na hora</span>
+          <span class="ss-dot"></span>
+        </span>
+        <span class="ss-group">
+          <span class="ss-item">Toque aqui</span>
+          <span class="ss-dot"></span>
+          <span class="ss-marquee-brand" data-marca>ARMAZEM MATEUS</span>
+          <span class="ss-dot"></span>
+          <span class="ss-item soft">Inicie o atendimento</span>
+          <span class="ss-dot"></span>
+          <span class="ss-item">Toque aqui</span>
+          <span class="ss-dot"></span>
+          <span class="ss-marquee-brand" data-marca>ARMAZEM MATEUS</span>
+          <span class="ss-dot"></span>
+          <span class="ss-item soft">GM ID e senha na hora</span>
+          <span class="ss-dot"></span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PAINEL DE GESTÃO ==================== -->
+  <div class="drawer-backdrop" id="admin-backdrop" hidden></div>
+  <aside class="drawer" id="admin-drawer" role="dialog" aria-modal="true" aria-labelledby="admin-title" hidden>
+    <header class="drawer-head">
+      <div>
+        <h2 id="admin-title">Painel de gestão</h2>
+        <p>Configurações, registros e acesso restrito.</p>
+      </div>
+      <button type="button" class="btn btn-ghost btn-sm" data-action="close-admin">Fechar</button>
+    </header>
+
+    <div class="drawer-body">
+      <div class="admin-actions">
+        <button type="button" class="btn btn-secondary" data-action="open-settings">Impressora</button>
+        <button type="button" class="btn btn-secondary" data-action="open-log">Registro de operações</button>
+      </div>
+
+      <div class="admin-security">
+        <h3>Segurança</h3>
+        <p id="admin-password-status">Acesso protegido por senha.</p>
+        <button type="button" class="btn btn-secondary" data-action="change-admin-pass">Alterar senha de acesso</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==================== SENHA DE ACESSO ==================== -->
+  <div class="drawer-backdrop" id="admin-pass-backdrop" hidden></div>
+  <aside class="drawer" id="admin-pass-drawer" role="dialog" aria-modal="true" aria-labelledby="admin-pass-title" hidden>
+    <header class="drawer-head">
+      <div>
+        <h2 id="admin-pass-title">Acesso restrito</h2>
+        <p id="admin-pass-sub">Digite a senha do painel para continuar.</p>
+      </div>
+      <button type="button" class="btn btn-ghost btn-sm" data-action="close-admin-pass">Fechar</button>
+    </header>
+
+    <div class="drawer-body">
+      <p class="settings-error" id="admin-pass-error" hidden></p>
+
+      <div class="field" id="admin-pass-current-field" hidden>
+        <label for="admin-pass-current">Senha atual</label>
+        <input type="password" id="admin-pass-current" autocomplete="current-password" maxlength="64">
+      </div>
+
+      <div class="field">
+        <label for="admin-pass-new" id="admin-pass-new-label">Senha</label>
+        <input type="password" id="admin-pass-new" autocomplete="new-password" maxlength="64">
+      </div>
+
+      <div class="field" id="admin-pass-confirm-field" hidden>
+        <label for="admin-pass-confirm">Confirmar senha</label>
+        <input type="password" id="admin-pass-confirm" autocomplete="new-password" maxlength="64">
+      </div>
+
+      <p class="field-hint" id="admin-pass-hint">Somente o administrador deve conhecer esta senha.</p>
+    </div>
+
+    <footer class="drawer-foot">
+      <button type="button" class="btn btn-primary btn-sm" data-action="submit-admin-pass" id="btn-admin-pass">Entrar</button>
+    </footer>
+  </aside>
+
+  <!-- ==================== REGISTROS ==================== -->
+  <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+  <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" hidden>
+    <header class="drawer-head">
+      <div>
+        <h2 id="drawer-title">Registro de operações</h2>
+        <p>Sem senhas e sem CPF completo.</p>
+      </div>
+      <button type="button" class="btn btn-ghost btn-sm" data-action="close-log">Fechar</button>
+    </header>
+
+    <div class="drawer-body">
+      <ul class="log-list" id="log-list"></ul>
+      <p class="log-empty" id="log-empty">Nenhuma operação registrada nesta sessão.</p>
+    </div>
+
+    <footer class="drawer-foot">
+      <button type="button" class="btn btn-secondary btn-sm" data-action="export-log">Exportar .txt</button>
+      <button type="button" class="btn btn-ghost btn-sm" data-action="clear-log">Limpar</button>
+    </footer>
+  </aside>
+
+  <!-- ==================== IMPRESSORA ==================== -->
+  <div class="drawer-backdrop" id="settings-backdrop" hidden></div>
+  <aside class="drawer" id="settings" role="dialog" aria-modal="true" aria-labelledby="settings-title" hidden>
+    <header class="drawer-head">
+      <div>
+        <h2 id="settings-title">Impressora</h2>
+        <p>Escolha como o comprovante sai.</p>
+      </div>
+      <button type="button" class="btn btn-ghost btn-sm" data-action="close-settings">Fechar</button>
+    </header>
+
+    <div class="drawer-body">
+      <p class="settings-status" id="settings-status" data-state="loading">
+        <span class="settings-dot" aria-hidden="true"></span>
+        <span id="settings-status-text">Verificando a impressora de rede…</span>
+      </p>
+
+            <div class="android-box">
+        <h3>Impressora de rede</h3>
+        <p>O comprovante é enviado direto para o IP informado. Não é necessário PC.</p>
+
+        <div class="field">
+          <label for="android-printer-host">IP ou host da impressora</label>
+          <input type="text" id="android-printer-host" autocomplete="off" spellcheck="false"
+                 maxlength="255" placeholder="Ex.: 192.168.1.50">
+        </div>
+
+        <div class="android-grid">
+          <div class="field">
+            <label for="android-printer-port">Porta TCP</label>
+            <input type="number" id="android-printer-port" inputmode="numeric"
+                   min="1" max="65535" step="1" value="9100">
+          </div>
+
+          <div class="field">
+            <label for="android-printer-protocol">Protocolo</label>
+            <select id="android-printer-protocol">
+              <option value="escpos">ESC/POS (padrão)</option>
+              <option value="raw">Texto simples</option>
+              <option value="zpl">ZPL (Zebra)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="android-print-timeout">Tempo limite (ms)</label>
+          <input type="number" id="android-print-timeout" inputmode="numeric"
+                 min="1000" max="60000" step="500" value="10000">
+        </div>
+      </div>
+
+      <div class="android-box">
+        <h3>Integração Maestro</h3>
+        <p>
+          No modo direto as chamadas saem pela internet do próprio tablet: não precisa de PC
+          nem de servidor na nuvem. As chaves ficam salvas somente neste dispositivo —
+          nunca dentro do APK nem do repositório.
+        </p>
+
+        <div class="field">
+          <label for="android-integration-mode">Modo</label>
+          <select id="android-integration-mode">
+            <option value="maestro-direto">Maestro direto pelo tablet (recomendado)</option>
+            <option value="maestro">Maestro via backend HTTPS</option>
+            <option value="demo">Teste sem envio (demonstração)</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="android-maestro-base">URL base do Maestro</label>
+          <input type="url" id="android-maestro-base" autocomplete="off" spellcheck="false"
+                 maxlength="500" placeholder="https://catchup.grupomateus.com.br/catchup/api/catchup-rest-login">
+        </div>
+
+        <div class="field">
+          <label for="android-maestro-key">Chave da API (x-api-key)</label>
+          <input type="password" id="android-maestro-key" autocomplete="off" maxlength="500">
+        </div>
+
+        <div class="field">
+          <label for="android-maestro-origin">Origin da requisição (x-request-origin)</label>
+          <input type="password" id="android-maestro-origin" autocomplete="off" maxlength="500">
+        </div>
+
+        <div class="field">
+          <label for="android-backend-url">URL do backend Maestro</label>
+          <input type="url" id="android-backend-url" autocomplete="off" spellcheck="false"
+                 maxlength="300" placeholder="https://servidor.exemplo.com/api/gm">
+        </div>
+
+        <div class="field">
+          <label for="android-backend-token">Token de acesso (opcional)</label>
+          <input type="password" id="android-backend-token" autocomplete="off" maxlength="300">
+        </div>
+
+        <div class="field">
+          <label for="android-allow-insecure">Permitir HTTP sem SSL</label>
+          <select id="android-allow-insecure">
+            <option value="false">Não (recomendado)</option>
+            <option value="true">Sim (somente rede confiável)</option>
+          </select>
+        </div>
+      </div>
+<div class="field android-hide">
+        <label for="settings-mode">Modo de impressão</label>
+        <select id="settings-mode">
+          <option value="navegador">Janela do navegador (escolho a impressora)</option>
+          <option value="direto">Direto, sem janela (servidor local)</option>
+        </select>
+        <p class="field-hint" id="settings-mode-hint">Abre a janela de impressão para você escolher e confirmar.</p>
+      </div>
+
+      <div class="field android-hide">
+        <label for="settings-printer">Impressora</label>
+        <select id="settings-printer">
+          <option value="">Impressora padrão do Windows</option>
+        </select>
+        <p class="field-hint">A lista vem das impressoras instaladas neste computador.</p>
+      </div>
+
+      <div class="field">
+        <label for="settings-paper">Tamanho do papel</label>
+        <select id="settings-paper">
+          <option value="personalizado">Personalizado (etiqueta)</option>
+          <option value="80mm">72 × 297 mm (bobina / térmica)</option>
+          <option value="58mm">58 mm (bobina / térmica)</option>
+          <option value="a6">A6 (meia folha)</option>
+        </select>
+        <p class="field-hint">Etiqueta personalizada: informe largura e altura em milímetros.</p>
+      </div>
+
+      <div id="settings-paper-custom">
+        <div class="field">
+          <label for="settings-paper-w">Largura (mm)</label>
+          <input type="number" id="settings-paper-w" inputmode="decimal" min="20" max="300" step="0.1" value="72">
+        </div>
+        <div class="field">
+          <label for="settings-paper-h">Altura (mm)</label>
+          <input type="number" id="settings-paper-h" inputmode="decimal" min="20" max="1000" step="0.1" value="100">
+        </div>
+      </div>
+      <p class="field-hint" id="settings-paper-hint">Etiqueta padrão: 72 × 100 mm. Ajuste a largura e a altura em milímetros.</p>
+
+      <p class="settings-note" id="settings-note" hidden></p>
+      <p class="settings-error" id="settings-error" hidden></p>
+    </div>
+
+    <footer class="drawer-foot settings-foot">
+      <button type="button" class="btn btn-secondary btn-sm" data-action="test-print" id="btn-test-print">Testar impressora</button>
+      <button type="button" class="btn btn-primary btn-sm" data-action="save-settings" id="btn-save-settings">Salvar</button>
+    </footer>
+  </aside>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- ==================== ÁREA DE IMPRESSÃO ==================== -->
+  <div id="print-root" aria-hidden="true" data-paper="80mm">
+    <div class="print-sheet">
+      <p class="p-brand"><strong data-marca>ARMAZEM MATEUS</strong> · <span data-unidade>CD-336</span></p>
+      <p class="p-line">
+        <span class="p-label">GM / LOGIN:</span>
+        <span class="p-value" id="print-gm"></span>
+      </p>
+      <p class="p-line" id="print-pass-line">
+        <span class="p-label">NOVA SENHA:</span>
+        <span class="p-value" id="print-pass"></span>
+      </p>
+    </div>
+  </div>
+
+  <script src="assets/android-bridge.js"></script>
+  <script src="assets/config.js?v=14"></script>
+  <script src="assets/vault.js?v=11"></script>
+  <script src="assets/adapter.js?v=11"></script>
+  <script src="assets/app.js?v=16"></script>
+  <script src="assets/click-fix.js?v=2"></script>
+</body>
+</html>
